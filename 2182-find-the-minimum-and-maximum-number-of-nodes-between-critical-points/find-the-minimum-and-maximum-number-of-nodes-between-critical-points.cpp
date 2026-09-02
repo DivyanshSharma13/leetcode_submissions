@@ -27,9 +27,6 @@ public:
         if(ans.size()<2){
             return {-1,-1};
         }
-        for(const auto& a: ans){
-            cout<<a<<" ";
-        }
         int mn = INT_MAX;
         for(int i=1;i<ans.size();i++){
             mn = min(mn,ans[i]-ans[i-1]);
