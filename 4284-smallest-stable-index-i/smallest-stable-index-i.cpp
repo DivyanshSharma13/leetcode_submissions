@@ -2,19 +2,26 @@ class Solution {
 public:
     int firstStableIndex(vector<int>& nums, int k) {
         int n = nums.size();
+
+        vector<int> suffixMin(n);
+        suffixMin[n - 1] = nums[n - 1];
+
+        for(int i = n - 2; i >= 0; i--) {
+            suffixMin[i] = min(nums[i], suffixMin[i + 1]);
+        }
+
         int mx = INT_MIN;
-        int mn=INT_MAX;
-        int ans=0;
-        int idx=-1;
-        for(int i=0;i<n;i++){
-            mx = max(mx,nums[i]);
-            mn = *min_element(nums.begin() + i, nums.end());
-            ans = mx-mn;
-            if(ans<=k){
-                idx=i;
-                break;
+
+        for(int i = 0; i < n; i++) {
+            mx = max(mx, nums[i]);
+
+            int ans = mx - suffixMin[i];
+
+            if(ans <= k) {
+                return i;
             }
         }
-        return idx;
+
+        return -1;
     }
 };
